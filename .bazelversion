@@ -1,0 +1,3 @@
+7.1.2
+# important to prevent errors from version updates
+# such as: https://github.com/hedronvision/bazel-compile-commands-extractor/issues/199

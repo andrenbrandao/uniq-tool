@@ -1,0 +1,13 @@
+# Check google-cloud-cpp/.clang-tidy as example
+# https://github.com/googleapis/google-cloud-cpp/blob/main/.clang-tidy
+
+Checks: >
+  modernize-*,
+  readability-*,
+  performance-*,
+  bugprone-*,
+  -modernize-use-trailing-return-type,
+  abseil-*,
+WarningsAsErrors: ""
+HeaderFilterRegex: ".*"
+FormatStyle: none

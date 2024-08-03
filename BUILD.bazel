@@ -1,0 +1,40 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_binary(
+  name = "hello_main",
+  srcs = ["hello_main.cc"],
+  deps = [
+    ":hello_world",
+    "@abseil-cpp//absl/flags:parse"
+  ]
+)
+
+cc_library(
+  name = "hello_world",
+  srcs = ["hello_world.cc"],
+  hdrs = ["hello_world.h"]
+)
+
+cc_test(
+  name = "hello_world_test",
+  size = "small",
+  srcs = ["hello_world_test.cc"],
+  deps = [
+    "@googletest//:gtest",
+    "@googletest//:gtest_main",
+    ":hello_world",
+  ],
+)
+
+sh_test(
+    name = "hello_integration_test",
+    size = "small",
+    srcs = ["hello_integration_test.sh"],
+    data = [
+      ":hello_main",
+      "testdata/expected_output.txt"
+    ],
+    args = [
+      '$(location :hello_main)',
+    ],
+)
