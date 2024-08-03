@@ -4,6 +4,6 @@
 #include <string>
 #include <vector>
 
-std::vector<std::string> GetUnique(std::vector<std::string> lines);
+std::vector<std::string> GetUnique(const std::vector<std::string> &lines);
 
 #endif // !GET_UNIQUE_H
