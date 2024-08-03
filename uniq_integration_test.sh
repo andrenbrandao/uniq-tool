@@ -3,10 +3,11 @@
 # Grabs the arguments from Bazel
 echo "cmd: $1"
 CMD=$1
+INPUT_TXT=./testdata/test.txt
 EXPECTED_TXT=./testdata/expected_output.txt
 
 # Executes main and compares if the result is expected.
-$CMD > test_output.txt
+$CMD $INPUT_TXT > test_output.txt
 if cmp test_output.txt $EXPECTED_TXT
 then
   echo '---' test: PASS

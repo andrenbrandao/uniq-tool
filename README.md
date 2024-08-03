@@ -1,6 +1,6 @@
 # bazel-cpp-boilerplate
 
-Bazel boilerplate with C++ and GoogleTest.
+uniq - Unix Command line tool built for John Crickett's Coding Challenge.
 
 ## How to build and run
 
@@ -11,7 +11,7 @@ bazel build :all
 ```
 
 ```bash
-bazel run :hello_main
+bazel-bin/uniq testdata/test.txt
 ```
 
 ## Running the tests

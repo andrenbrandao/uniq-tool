@@ -1,40 +1,41 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
 
 cc_binary(
-  name = "hello_main",
-  srcs = ["hello_main.cc"],
+  name = "uniq",
+  srcs = ["uniq_main.cc"],
   deps = [
-    ":hello_world",
-    "@abseil-cpp//absl/flags:parse"
+    "@abseil-cpp//absl/flags:parse",
+    ":get_unique"
   ]
 )
 
 cc_library(
-  name = "hello_world",
-  srcs = ["hello_world.cc"],
-  hdrs = ["hello_world.h"]
+  name = "get_unique",
+  srcs = ["get_unique.cc"],
+  hdrs = ["get_unique.h"]
 )
 
 cc_test(
-  name = "hello_world_test",
+  name = "get_unique_test",
   size = "small",
-  srcs = ["hello_world_test.cc"],
+  srcs = ["get_unique_test.cc"],
   deps = [
     "@googletest//:gtest",
     "@googletest//:gtest_main",
-    ":hello_world",
+    ":get_unique",
   ],
 )
 
 sh_test(
-    name = "hello_integration_test",
+    name = "uniq_integration_test",
     size = "small",
-    srcs = ["hello_integration_test.sh"],
+    srcs = ["uniq_integration_test.sh"],
     data = [
-      ":hello_main",
-      "testdata/expected_output.txt"
+      ":uniq",
+      "testdata/expected_output.txt",
+      "testdata/test.txt"
     ],
     args = [
-      '$(location :hello_main)',
+      '$(location :uniq)',
     ],
 )
