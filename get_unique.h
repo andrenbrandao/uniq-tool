@@ -3,6 +3,11 @@
 
 #include <iostream>
 
-void GetUnique(std::istream &input_stream, std::ostream &output_stream);
+struct Config {
+  bool count = false;
+};
+
+void GetUnique(std::istream &input_stream, std::ostream &output_stream,
+               Config config = {});
 
 #endif // !GET_UNIQUE_H
