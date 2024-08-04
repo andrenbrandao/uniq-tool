@@ -1,15 +1,15 @@
-#include <string>
-#include <vector>
+#include "get_unique.h"
+#include <iostream>
 
-std::vector<std::string> GetUnique(const std::vector<std::string> &lines) {
-  std::vector<std::string> result;
-  result.push_back(lines[0]);
+void GetUnique(std::istream &input_stream, std::ostream &output_stream) {
+  std::string str_read;
+  std::string last_str;
 
-  for (uint64_t i = 1; i < lines.size(); i++) {
-    if (lines[i] != lines[i - 1]) {
-      result.push_back(lines[i]);
+  while (std::getline(input_stream, str_read)) {
+    if (str_read != last_str) {
+      output_stream << str_read << "\n";
     }
-  }
 
-  return result;
+    last_str = str_read;
+  }
 }

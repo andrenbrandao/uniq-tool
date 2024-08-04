@@ -1,21 +1,21 @@
 #include "get_unique.h"
-#include "gmock/gmock.h"
 #include <gtest/gtest.h>
-#include <string>
-#include <vector>
+#include <sstream>
 
 TEST(GetUnique, RemovesConsecutiveRepeatedStrings) {
-  std::vector<std::string> input = {"line1", "line2", "line2", "line3"};
+  std::istringstream input("line1\nline2\nline2\nline3");
 
-  std::vector<std::string> result = GetUnique(input);
+  std::ostringstream output{};
+  GetUnique(input, output);
 
-  EXPECT_THAT(result, testing::ElementsAre("line1", "line2", "line3"));
+  EXPECT_EQ(output.str(), "line1\nline2\nline3\n");
 }
 
 TEST(GetUnique, DoesNotRemoveRepeatedNonAdjacent) {
-  std::vector<std::string> input = {"line1", "line2", "line1", "line3"};
+  std::istringstream input("line1\nline2\nline1\nline3");
 
-  std::vector<std::string> result = GetUnique(input);
+  std::ostringstream output{};
+  GetUnique(input, output);
 
-  EXPECT_THAT(result, testing::ElementsAre("line1", "line2", "line1", "line3"));
+  EXPECT_EQ(output.str(), "line1\nline2\nline1\nline3\n");
 }

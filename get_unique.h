@@ -1,9 +1,8 @@
 #ifndef GET_UNIQUE_H
 #define GET_UNIQUE_H
 
-#include <string>
-#include <vector>
+#include <iostream>
 
-std::vector<std::string> GetUnique(const std::vector<std::string> &lines);
+void GetUnique(std::istream &input_stream, std::ostream &output_stream);
 
 #endif // !GET_UNIQUE_H
