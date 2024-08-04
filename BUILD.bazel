@@ -1,41 +1,41 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 
 cc_binary(
-  name = "uniq",
-  srcs = ["uniq_main.cc"],
-  deps = [
-    "@abseil-cpp//absl/flags:parse",
-    ":get_unique"
-  ]
+    name = "uniq",
+    srcs = ["uniq_main.cc"],
+    deps = [
+        ":get_unique",
+        "@abseil-cpp//absl/flags:parse",
+    ],
 )
 
 cc_library(
-  name = "get_unique",
-  srcs = ["get_unique.cc"],
-  hdrs = ["get_unique.h"]
+    name = "get_unique",
+    srcs = ["get_unique.cc"],
+    hdrs = ["get_unique.h"],
 )
 
 cc_test(
-  name = "get_unique_test",
-  size = "small",
-  srcs = ["get_unique_test.cc"],
-  deps = [
-    "@googletest//:gtest",
-    "@googletest//:gtest_main",
-    ":get_unique",
-  ],
+    name = "get_unique_test",
+    size = "small",
+    srcs = ["get_unique_test.cc"],
+    deps = [
+        ":get_unique",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
 )
 
 sh_test(
     name = "uniq_integration_test",
     size = "small",
     srcs = ["uniq_integration_test.sh"],
-    data = [
-      ":uniq",
-      "testdata/expected_output.txt",
-      "testdata/test.txt"
-    ],
     args = [
-      '$(location :uniq)',
+        "$(location :uniq)",
+    ],
+    data = [
+        "testdata/expected_output.txt",
+        "testdata/test.txt",
+        ":uniq",
     ],
 )
