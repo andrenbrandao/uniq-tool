@@ -41,6 +41,32 @@ void UniqueWithCount(std::istream &input_stream, std::ostream &output_stream) {
   output_stream << last_read << '\n';
 }
 
+void UniqueOnlyRepeated(std::istream &input_stream,
+                        std::ostream &output_stream) {
+  std::string str_read;
+  std::string last_read;
+  uint64_t count = 0;
+
+  while (std::getline(input_stream, str_read)) {
+    if (str_read == last_read || count == 0) {
+      count++;
+      last_read = str_read;
+      continue;
+    }
+
+    if (count > 1) {
+      output_stream << last_read << '\n';
+    }
+
+    count = 1;
+    last_read = str_read;
+  }
+
+  if (count > 1) {
+    output_stream << last_read << '\n';
+  }
+}
+
 void Unique(std::istream &input_stream, std::ostream &output_stream) {
   std::string str_read;
   std::string last_str;
@@ -60,6 +86,11 @@ void GetUnique(std::istream &input_stream, std::ostream &output_stream,
                Config config) {
   if (config.count) {
     UniqueWithCount(input_stream, output_stream);
+    return;
+  }
+
+  if (config.repeated) {
+    UniqueOnlyRepeated(input_stream, output_stream);
     return;
   }
 

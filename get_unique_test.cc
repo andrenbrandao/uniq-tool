@@ -28,3 +28,12 @@ TEST(GetUnique, CountNumberOfTimesLineAppear) {
 
   EXPECT_EQ(output.str(), "      2 line1\n      3 line2\n      2 line3\n");
 }
+
+TEST(GetUnique, OnlyPrintsRepeatedLines) {
+  std::istringstream input("line1\nline2\nline2\nline3\nline3");
+
+  std::ostringstream output{};
+  GetUnique(input, output, {.repeated = true});
+
+  EXPECT_EQ(output.str(), "line2\nline3\n");
+}

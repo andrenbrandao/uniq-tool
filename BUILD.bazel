@@ -39,6 +39,7 @@ sh_test(
     data = [
         "testdata/expected_count_output.txt",
         "testdata/expected_output.txt",
+        "testdata/expected_repeated_only_output.txt",
         "testdata/test.txt",
         ":uniq",
     ],
