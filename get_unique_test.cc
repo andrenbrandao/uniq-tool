@@ -26,5 +26,5 @@ TEST(GetUnique, CountNumberOfTimesLineAppear) {
   std::ostringstream output{};
   GetUnique(input, output, {.count = true});
 
-  EXPECT_EQ(output.str(), "2 line1\n3 line2\n2 line3\n");
+  EXPECT_EQ(output.str(), "      2 line1\n      3 line2\n      2 line3\n");
 }

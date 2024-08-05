@@ -13,6 +13,9 @@ cc_library(
     name = "get_unique",
     srcs = ["get_unique.cc"],
     hdrs = ["get_unique.h"],
+    deps = [
+        "@abseil-cpp//absl/strings",
+    ],
 )
 
 cc_test(
@@ -34,6 +37,7 @@ sh_test(
         "$(location :uniq)",
     ],
     data = [
+        "testdata/expected_count_output.txt",
         "testdata/expected_output.txt",
         "testdata/test.txt",
         ":uniq",

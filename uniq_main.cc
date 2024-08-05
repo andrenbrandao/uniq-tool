@@ -1,14 +1,18 @@
+#include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
 #include "get_unique.h"
 #include <cstring>
 #include <fstream>
 #include <iostream>
 
+ABSL_FLAG(bool, c, false, "prefix lines by the number of occurrences");
+
 int main(int argc, char **argv) {
   std::vector<char *> args = absl::ParseCommandLine(argc, argv);
+  Config config = {.count = absl::GetFlag(FLAGS_c)};
 
   if (args.size() == 1) {
-    GetUnique(std::cin, std::cout);
+    GetUnique(std::cin, std::cout, config);
     return 0;
   }
 
@@ -40,6 +44,6 @@ int main(int argc, char **argv) {
     output = &output_file;
   }
 
-  GetUnique(*input, *output);
+  GetUnique(*input, *output, config);
   return 0;
 }
