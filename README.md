@@ -1,4 +1,4 @@
-# bazel-cpp-boilerplate
+# uniq-tool
 
 uniq - Unix Command line tool built for John Crickett's Coding Challenge.
 
@@ -12,6 +12,12 @@ bazel build :all
 
 ```bash
 bazel-bin/uniq testdata/test.txt
+```
+
+To find out which flags are supported, execute:
+
+```bash
+bazel-bin/uniq --help
 ```
 
 ## Running the tests
