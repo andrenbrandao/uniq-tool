@@ -37,3 +37,12 @@ TEST(GetUnique, OnlyPrintsRepeatedLines) {
 
   EXPECT_EQ(output.str(), "line2\nline3\n");
 }
+
+TEST(GetUnique, ReturnsUniqueLinesOnly) {
+  std::istringstream input("line1\nline2\nline2\nline3");
+
+  std::ostringstream output{};
+  GetUnique(input, output, {.unique = true});
+
+  EXPECT_EQ(output.str(), "line1\nline3\n");
+}

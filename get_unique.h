@@ -6,6 +6,7 @@
 struct Config {
   bool count = false;
   bool repeated = false;
+  bool unique = false;
 };
 
 void GetUnique(std::istream &input_stream, std::ostream &output_stream,
