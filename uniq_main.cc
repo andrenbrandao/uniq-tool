@@ -7,11 +7,13 @@
 
 ABSL_FLAG(bool, c, false, "prefix lines by the number of occurrences");
 ABSL_FLAG(bool, d, false, "only print duplicate lines, one for each group");
+ABSL_FLAG(bool, u, false, "only print unique lines");
 
 int main(int argc, char **argv) {
   std::vector<char *> args = absl::ParseCommandLine(argc, argv);
   Config config = {.count = absl::GetFlag(FLAGS_c),
-                   .repeated = absl::GetFlag(FLAGS_d)};
+                   .repeated = absl::GetFlag(FLAGS_d),
+                   .unique = absl::GetFlag(FLAGS_u)};
 
   if (args.size() == 1) {
     GetUnique(std::cin, std::cout, config);

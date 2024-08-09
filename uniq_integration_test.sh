@@ -7,6 +7,7 @@ INPUT_TXT=./testdata/test.txt
 EXPECTED_TXT=./testdata/expected_output.txt
 EXPECTED_COUNT_TXT=./testdata/expected_count_output.txt
 EXPECTED_REPEATED_ONLY_TXT=./testdata/expected_repeated_only_output.txt
+EXPECTED_UNIQUE_ONLY_TXT=./testdata/expected_unique_only_output.txt
 
 clean() {
   rm test_output.txt
@@ -100,6 +101,19 @@ then
 else
   echo '---' output is not the same as $EXPECTED_REPEATED_ONLY_TXT
   diff -u --color=always test_output.txt $EXPECTED_REPEATED_ONLY_TXT
+  echo '---' test: FAIL
+  exit 1
+fi
+
+# Print only unique lines when -u is enabled
+clean
+$CMD -u $INPUT_TXT > test_output.txt
+if cmp test_output.txt $EXPECTED_UNIQUE_ONLY_TXT
+then
+  echo '---' test: PASS
+else
+  echo '---' output is not the same as $EXPECTED_UNIQUE_ONLY_TXT
+  diff -u --color=always test_output.txt $EXPECTED_UNIQUE_ONLY_TXT
   echo '---' test: FAIL
   exit 1
 fi
