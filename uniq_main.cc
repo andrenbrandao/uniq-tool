@@ -1,5 +1,6 @@
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
+#include "absl/flags/usage.h"
 #include "get_unique.h"
 #include <cstring>
 #include <fstream>
@@ -10,6 +11,9 @@ ABSL_FLAG(bool, d, false, "only print duplicate lines, one for each group");
 ABSL_FLAG(bool, u, false, "only print unique lines");
 
 int main(int argc, char **argv) {
+  absl::SetProgramUsageMessage(
+      "Filter adjacent matching lines from INPUT (or standard input), writing "
+      "to OUTPUT (or standard output).\n\nSample usage: uniq input.txt");
   std::vector<char *> args = absl::ParseCommandLine(argc, argv);
   Config config = {.count = absl::GetFlag(FLAGS_c),
                    .repeated = absl::GetFlag(FLAGS_d),
