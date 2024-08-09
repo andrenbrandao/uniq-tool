@@ -6,19 +6,36 @@
 
 namespace {
 
-constexpr int NUM_PADDING_LEFT = 6;
+class Renderer {
+public:
+  Renderer(const Config &config) : config_(config){};
 
-void PrintLineNumber(uint64_t line_number, std::ostream &output_stream) {
-  std::string line_number_str = absl::StrCat(line_number);
-
-  for (uint64_t i = 0; i < NUM_PADDING_LEFT - line_number_str.length() + 1;
-       i++) {
-    output_stream << " ";
+  void execute(const std::string &line, uint64_t count,
+               std::ostream &output_stream) const {
+    if (config_.count) {
+      printLineNumber(count, output_stream);
+    }
+    output_stream << line << '\n';
   }
-  output_stream << line_number << " ";
-}
 
-void UniqueWithCount(std::istream &input_stream, std::ostream &output_stream) {
+  static void printLineNumber(uint64_t line_number,
+                              std::ostream &output_stream) {
+    std::string line_number_str = absl::StrCat(line_number);
+
+    for (uint64_t i = 0; i < NUM_PADDING_LEFT - line_number_str.length() + 1;
+         i++) {
+      output_stream << " ";
+    }
+    output_stream << line_number << " ";
+  }
+
+private:
+  const Config &config_;
+  static constexpr int NUM_PADDING_LEFT = 6;
+};
+
+void UniqueWithCount(std::istream &input_stream, std::ostream &output_stream,
+                     const Renderer &renderer) {
   std::string str_read;
   std::string last_read;
   uint64_t count = 0;
@@ -30,19 +47,17 @@ void UniqueWithCount(std::istream &input_stream, std::ostream &output_stream) {
       continue;
     }
 
-    PrintLineNumber(count, output_stream);
-    output_stream << last_read << '\n';
+    renderer.execute(last_read, count, output_stream);
 
     count = 1;
     last_read = str_read;
   }
 
-  PrintLineNumber(count, output_stream);
-  output_stream << last_read << '\n';
+  renderer.execute(last_read, count, output_stream);
 }
 
-void UniqueOnlyRepeated(std::istream &input_stream,
-                        std::ostream &output_stream) {
+void OnlyRepeated(std::istream &input_stream, std::ostream &output_stream,
+                  const Renderer &renderer) {
   std::string str_read;
   std::string last_read;
   uint64_t count = 0;
@@ -55,7 +70,7 @@ void UniqueOnlyRepeated(std::istream &input_stream,
     }
 
     if (count > 1) {
-      output_stream << last_read << '\n';
+      renderer.execute(last_read, count, output_stream);
     }
 
     count = 1;
@@ -63,11 +78,12 @@ void UniqueOnlyRepeated(std::istream &input_stream,
   }
 
   if (count > 1) {
-    output_stream << last_read << '\n';
+    renderer.execute(last_read, count, output_stream);
   }
 }
 
-void UniqueOnly(std::istream &input_stream, std::ostream &output_stream) {
+void OnlyUnique(std::istream &input_stream, std::ostream &output_stream,
+                const Renderer &renderer) {
   std::string str_read;
   std::string last_read;
   uint64_t count = 0;
@@ -86,12 +102,13 @@ void UniqueOnly(std::istream &input_stream, std::ostream &output_stream) {
     }
 
     count = 1;
-    output_stream << last_read << '\n';
+
+    renderer.execute(last_read, count, output_stream);
     last_read = str_read;
   }
 
   if (count == 1) {
-    output_stream << last_read << '\n';
+    renderer.execute(last_read, count, output_stream);
   }
 }
 
@@ -112,18 +129,21 @@ void Unique(std::istream &input_stream, std::ostream &output_stream) {
 
 void GetUnique(std::istream &input_stream, std::ostream &output_stream,
                Config config) {
-  if (config.count) {
-    UniqueWithCount(input_stream, output_stream);
-    return;
-  }
+
+  Renderer renderer = Renderer(config);
 
   if (config.repeated) {
-    UniqueOnlyRepeated(input_stream, output_stream);
+    OnlyRepeated(input_stream, output_stream, renderer);
     return;
   }
 
   if (config.unique) {
-    UniqueOnly(input_stream, output_stream);
+    OnlyUnique(input_stream, output_stream, renderer);
+    return;
+  }
+
+  if (config.count) {
+    UniqueWithCount(input_stream, output_stream, renderer);
     return;
   }
 
