@@ -128,7 +128,7 @@ void Unique(std::istream &input_stream, std::ostream &output_stream) {
 } // namespace
 
 void GetUnique(std::istream &input_stream, std::ostream &output_stream,
-               Config config) {
+               const Config &config) {
 
   Renderer renderer = Renderer(config);
 

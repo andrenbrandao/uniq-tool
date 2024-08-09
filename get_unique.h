@@ -10,6 +10,6 @@ struct Config {
 };
 
 void GetUnique(std::istream &input_stream, std::ostream &output_stream,
-               Config config = {});
+               const Config &config = {});
 
 #endif // !GET_UNIQUE_H
